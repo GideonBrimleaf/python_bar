@@ -3,6 +3,8 @@
 It's no secret - importing in Python is A Hard Thing.  I've suffered and done the hard work so you don't have to.
 The following is compatible with Python 3.3 onwards since there's no need for empty `__init__.py` files anymore to litter up your code.
 
+If you want to know why this is The Way then [here's a good starting point to understanding it](https://stackoverflow.com/questions/14132789/relative-imports-for-the-billionth-time). Good Luck!
+
 ## Simple Start
 
 Let's say you want to start with a simple Python class and want to write some tests for it.  You may have a folder structure similar to the following:
@@ -23,7 +25,7 @@ python tests/drinks_test.py
 
 TLDR:
 
-Imports in python aren't relative to the file where they are defined.  They are relative to where python gets executed
+Imports in python aren't relative to the file where they are defined.  They are relative to where python gets executed.
 
 1. Need to add to test file
 
