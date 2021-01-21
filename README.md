@@ -20,3 +20,25 @@ As mentioned - Python 3.3 onwards can [happily create namespaces for packages wi
 ```
 python tests/drinks_test.py
 ```
+
+TLDR:
+
+Imports in python aren't relative to the file where they are defined.  They are relative to where python gets executed
+
+1. Need to add to test file
+
+```
+if __name__ == '__main__':
+    unittest.main()
+```
+
+2. Need to also append the relative parent directory to the sys_path - this is where Python looks for files when it's executing:
+
+```
+import sys
+sys.path.append("..")
+```
+
+3. If you're executing at the project level run `python -m tests.drinks_test` WITHOUT the file extension.  This runs it in module mode (running `python tests/drinks_test.py` won't work some [big fuss over the name being "main" otherwise](https://stackoverflow.com/a/14132912/13898069))
+
+4. If you're executing inside the test file - you can either `python drinks_test.py` or `python -m drinks_test`
