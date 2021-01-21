@@ -1,4 +1,7 @@
 import unittest
+import sys
+sys.path.append("..")
+
 from src.bar import Bar
 from src.drinks import Drink
 
@@ -24,3 +27,6 @@ class TestBar(unittest.TestCase):
     def test_the_bar_drinks_have_prices(self):
         self.my_amazing_bar.add_drinks(self.my_awesome_drink)
         self.assertEqual(8.99, self.my_amazing_bar.list_of_drinks[0].price())
+
+if __name__ == '__main__':
+    unittest.main()

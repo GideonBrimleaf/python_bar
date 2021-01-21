@@ -1,4 +1,7 @@
 import unittest
+import sys
+sys.path.append("..")
+
 from src.drinks import Drink
 
 class TestDrinks(unittest.TestCase):
@@ -13,3 +16,6 @@ class TestDrinks(unittest.TestCase):
     
     def test_drink_has_type(self):
         self.assertEqual("Cocktail", self.my_awesome_drink.type)
+
+if __name__ == '__main__':
+    unittest.main()
