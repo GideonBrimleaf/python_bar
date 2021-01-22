@@ -40,16 +40,16 @@ from ..src.drinks import Drink
 
 class TestDrinks(unittest.TestCase):
     def setUp(self):
-        self.my_awesome_drink = Drink("Mojito", 450, "Cocktail")
+        self.my_awesome_drink = Drink("Americano", 450, "Coffee")
     
     def test_drink_has_name(self):
-        self.assertEqual("Mojito", self.my_awesome_drink.name)
+        self.assertEqual("Americano", self.my_awesome_drink.name)
     
     def test_drink_has_price(self):
         self.assertEqual(4.50, self.my_awesome_drink.price())
     
     def test_drink_has_type(self):
-        self.assertEqual("Cocktail", self.my_awesome_drink.type)
+        self.assertEqual("Coffee", self.my_awesome_drink.type)
 
 # We need the following so it will execute the tests when we run the file in python
 if __name__ == '__main__':
@@ -139,22 +139,22 @@ However to maintain consistency, I'd recommend sticking with the `-m` flag.
 
 ## Running Multiple files
 
-So now we have a way to execute the test files from both the top level directory as well as the individual directory.  This is scaleable with multiple class and test files:
+So now we have a way to execute the test files from both the top level directory as well as the individual directory.  This is scalable with multiple class and test files:
 
 ```
 project
 ├── src
-│   ├── bar.py
+│   ├── cafe.py
 │   └── drinks.py
 └── tests
-    ├── bar_test.py
+    ├── cafe_test.py
     └── drinks_test.py
 ```
 
-Our `bar` class expects to be able to add `drinks` to it's stock:
+Our `cafe` class expects to be able to add `drinks` to it's stock:
 
 ```
-class Bar:
+class Cafe:
     def __init__(self, name, location):
         self.name = name
         self.location = location
@@ -164,56 +164,55 @@ class Bar:
         self.list_of_drinks.append(drink)
 ```
 
-And we can test that like so - import drinks into the bar test:
+And we can test that like so - by importing `drinks` into the `cafe_test.py`:
 
 ```
 import unittest
 import sys
 sys.path.append("..")
 
-from src.bar import Bar
+from src.cafe import Cafe
 from src.drinks import Drink
 
-class TestBar(unittest.TestCase):
+class TestCafe(unittest.TestCase):
     def setUp(self):
-        self.my_amazing_bar = Bar("My Amazing Bar", "Edinburgh")
-        self.my_awesome_drink = Drink("Screwdriver", 899, "Cocktail")
+        self.my_amazing_cafe = Cafe("My Amazing Cafe", "Edinburgh")
+        self.my_awesome_drink = Drink("Mocha", 899, "Coffee")
     
-    def test_bar_has_name(self):
-        self.assertEqual("My Amazing Bar", self.my_amazing_bar.name)
+    def test_cafe_has_name(self):
+        self.assertEqual("My Amazing Cafe", self.my_amazing_cafe.name)
     
-    def test_bar_has_location(self):
-        self.assertEqual("Edinburgh", self.my_amazing_bar.location)
+    def test_cafe_has_location(self):
+        self.assertEqual("Edinburgh", self.my_amazing_cafe.location)
     
-
-    def test_bar_starts_with_no_drinks(self):
-        self.assertEqual(0, len(self.my_amazing_bar.list_of_drinks))
+    def test_cafe_starts_with_no_drinks(self):
+        self.assertEqual(0, len(self.my_amazing_cafe.list_of_drinks))
     
-    def test_the_bar_can_add_a_drink(self):
-        self.my_amazing_bar.add_drinks(self.my_awesome_drink)
-        self.assertEqual(1, len(self.my_amazing_bar.list_of_drinks))
+    def test_the_cafe_can_add_a_drink(self):
+        self.my_amazing_cafe.add_drinks(self.my_awesome_drink)
+        self.assertEqual(1, len(self.my_amazing_cafe.list_of_drinks))
     
-    def test_the_bar_drinks_have_prices(self):
-        self.my_amazing_bar.add_drinks(self.my_awesome_drink)
-        self.assertEqual(8.99, self.my_amazing_bar.list_of_drinks[0].price())
+    def test_the_cafe_drinks_have_prices(self):
+        self.my_amazing_cafe.add_drinks(self.my_awesome_drink)
+        self.assertEqual(8.99, self.my_amazing_cafe.list_of_drinks[0].price())
 
 if __name__ == '__main__':
     unittest.main()
 ```
 
-We can call the bar test using the same principle from the root and test directory:
+We can call the `cafe_test.py` using the same principle from the root and test directory:
 
 ```
-python -m test.bar_test
+python -m test.cafe_test
 ```
 
 ```
 cd tests
-➜ project/test python -m bar_test
-➜ project/test python bar_test.py
+➜ project/test python -m cafe_test
+➜ project/test python cafe_test.py
 ```
 
-So we've developed a really neat way to have multiple execution points in our app that can refer to eachother with relative paths. If you needed to execute all the test files in one go [`unittest` has some neat ways to execute all the files from the project root directory](https://docs.python.org/3/library/unittest.html#test-discovery). 
+So we've developed a really neat way to have multiple execution points in our app that can refer to each other with relative paths. If you needed to execute all the test files in one go [`unittest` has some neat ways to execute all the files from the project root directory](https://docs.python.org/3/library/unittest.html#test-discovery). 
 
 ```
 python -m unittest discover tests "*_test.py"
