@@ -208,8 +208,8 @@ python -m test.cafe_test
 
 ```
 cd tests
-➜ project/test python -m cafe_test
-➜ project/test python cafe_test.py
+python -m cafe_test
+python cafe_test.py
 ```
 
 So we've developed a really neat way to have multiple execution points in our app that can refer to each other with relative paths. If you needed to execute all the test files in one go [`unittest` has some neat ways to execute all the files from the project root directory](https://docs.python.org/3/library/unittest.html#test-discovery). 
