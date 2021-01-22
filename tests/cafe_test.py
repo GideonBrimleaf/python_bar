@@ -1,7 +1,4 @@
 import unittest
-import sys
-sys.path.append("..")
-
 from src.cafe import Cafe
 from src.drink import Drink
 
