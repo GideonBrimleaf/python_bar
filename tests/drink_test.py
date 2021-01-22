@@ -2,9 +2,9 @@ import unittest
 import sys
 sys.path.append("..")
 
-from src.drinks import Drink
+from src.drink import Drink
 
-class TestDrinks(unittest.TestCase):
+class TestDrink(unittest.TestCase):
     def setUp(self):
         self.my_awesome_drink = Drink("Mojito", 450, "Cocktail")
     

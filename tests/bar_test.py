@@ -3,7 +3,7 @@ import sys
 sys.path.append("..")
 
 from src.bar import Bar
-from src.drinks import Drink
+from src.drink import Drink
 
 class TestBar(unittest.TestCase):
     def setUp(self):

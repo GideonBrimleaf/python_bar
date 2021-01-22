@@ -1,5 +1,5 @@
 import unittest
-from tests.drinks_test import TestDrinks
+from tests.drink_test import TestDrink
 from tests.bar_test import TestBar
 
 if __name__ == '__main__':
