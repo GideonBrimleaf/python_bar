@@ -1,6 +1,6 @@
 # Import relative from anywhere in your project in Python
 
-It's no secret - importing in Python is A Hard Thing.  I've suffered and done the hard work so you don't have to.
+It's no secret - importing in Python is _A Hard Thing_.  I've suffered and done the hard work so you don't have to.
 The following is compatible with Python 3.3 onwards as there's no need for empty `__init__.py` files anymore to litter up your code.
 
 ## Simple Start
@@ -63,7 +63,6 @@ As mentioned - Python 3.3 onwards can [happily create namespaces for packages wi
 Let's try and run our tests - for now let's say we're executing this whilst in the `project` directory (that's going to matter real quick):
 
 ```
-#terminal
 python tests/drinks_test.py
 
 ImportError: attempted relative import with no known parent package
@@ -74,6 +73,8 @@ Ok so it's recognised that we're using a relative path... but it doesn't underst
 Why is this a problem?  Let's just say it's complicated - if you want to know why then [here's a good starting point to understanding it](https://stackoverflow.com/questions/14132789/relative-imports-for-the-billionth-time). Good Luck! For now we can solve this with the following:
 
 ## The Initial Fix
+
+The [`unittest`framework has some pretty neat commands to handle this situation](https://docs.python.org/3/library/unittest.html#command-line-interface) but we're looking for techniques that will work across all python files.
 
 1. Remove the relative path to the `drinks` class file:
 
@@ -89,17 +90,16 @@ class TestDrinks(unittest.TestCase):
 2. Run the test file with the `-m` flag - again from the top-level `project` directory. Note the omission of the `.py` extension AND the use of dot notation rather than `/` to traverse directories.
 
 ```
-#terminal
-➜ project python -m tests.drinks_test
+python -m tests.drinks_test
 ```
 
 Your tests should run just fine now.  However this feels really weird - `drinks_test.py` now imports from `src` by pointing to a location totally wrong from where it sits. Additionally the `-m` flag seems to remove the need for the extension.
 
-It's also a bit flaky - if we move into the test file and try to apply the same logic we get another error:
+It's also a bit flaky - if we execute python from the test directory and try to apply the same logic we get another error:
 
 ```
-#terminal
-➜ project/test python -m drinks_test
+cd tests
+python -m drinks_test
 
 ModuleNotFoundError: No module named 'src'
 ```
@@ -124,7 +124,7 @@ class TestDrinks(unittest.TestCase):
 This allows us to execute this file from within the file's directory like so:
 
 ```
-➜ project/test python -m drinks_test
+python -m drinks_test
 ```
 
 While still also allowing us to execute it from the parent project directory like we did before.
@@ -132,7 +132,7 @@ While still also allowing us to execute it from the parent project directory lik
 And we can also call this without the `-m` flag with the same results:
 
 ```
-➜ project/test python drinks_test.py
+python drinks_test.py
 ```
 
 However to maintain consistency, I'd recommend sticking with the `-m` flag.
@@ -204,12 +204,17 @@ if __name__ == '__main__':
 We can call the bar test using the same principle from the root and test directory:
 
 ```
-➜ project python -m test.bar_test
+python -m test.bar_test
 ```
 
 ```
+cd tests
 ➜ project/test python -m bar_test
 ➜ project/test python bar_test.py
 ```
 
-What if we wanted to run both all our test files in one go?
+So we've developed a really neat way to have multiple execution points in our app that can refer to eachother with relative paths. If you needed to execute all the test files in one go [`unittest` has some neat ways to execute all the files from the project root directory](https://docs.python.org/3/library/unittest.html#test-discovery). 
+
+```
+python -m unittest discover tests "*_test.py"
+```
