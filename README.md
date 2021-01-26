@@ -9,4 +9,6 @@ To run the tests (from the root directory):
 
 ```
 python -m unittest discover tests "*_test.py"
+cd tests
+python -m unittest discover "*_test.py"
 ```
